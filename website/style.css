@@ -1,0 +1,48 @@
+/* style.css */
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+#generate {
+    padding: 10px 20px;
+    margin: 30px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+#generate:hover {
+    background-color: #0056b3;
+}
+
+#generate:active {
+    transition: .02s;
+    color: #0056b3;
+    background-color: white;
+    border: solid 2px #0056b3;
+    padding: 8px 18px;
+    
+}
+
+#roundedDiv {
+    width: 400px;
+    height: 300px;
+    background-color: #ddd; /* Light gray background */
+    border-radius: 20px; /* Rounded corners */
+    margin-top: 20px; /* Space between the button and the div */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
