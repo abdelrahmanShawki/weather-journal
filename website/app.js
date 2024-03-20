@@ -1,4 +1,4 @@
-//const e = require("express");
+
 
 // Personal API Key for OpenWeatherMap API
 const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?';
@@ -22,7 +22,6 @@ let getWeather = async (zipCode) => {
              zipCode : zipCode
             }
 
-        document.getElementById('roundedDiv').innerText  = `Temperature: ${temp}°C ,  ${date}`;
         return data;
     }
     catch (error) { 
@@ -35,9 +34,14 @@ let getWeather = async (zipCode) => {
 document.getElementById('generate').addEventListener('click', getData = () => {
     let zipCode = document.getElementsByTagName('input')[0].value;
     getWeather(zipCode).then((data) => {
-            postData('/postProjectData' , data);
+            postData('http://localhost:3000/postProjectData' , data).then((newData) => {
+                updateUI(newData);
+            })
     })
 });
+
+
+
 
 let postData = async (url = '' , data = {}) => {
     const response = await fetch(url , { 
@@ -55,10 +59,27 @@ let postData = async (url = '' , data = {}) => {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+        return newData;
     }
     catch(error) { 
         console.log(error);
     }
+}
+
+
+
+let updateUI = (newData) => {
+    try { 
+        if(!newData) { 
+            throw new Error('no data posted to fetch');
+        }
+        document.getElementById('roundedDiv').innerText = 
+        `Temperature: ${newData.temperature}°C |   ${newData.date}  | zip code ${newData.zipCode}`;
+    }
+    catch(error) { 
+            console.log(error);
+    }
+   
 }
 /* Function called by event listener */
 

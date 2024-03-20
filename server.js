@@ -1,4 +1,4 @@
-// Setup empty JS object to act as endpoint for all routes
+
 
 
 // Express to run server and routes
@@ -26,9 +26,10 @@ app.use(cors());
 // Initialize the main project folder
 app.use(express.static('website'));
 // Spin up the server
-const port = 8000;
-const server = app.listen(port , listening);
+const port = 3000;
+
 let listening = () => {console.log('server is running ')}
+const server = app.listen(port , listening);
 
 
 // Callback to debug
@@ -49,6 +50,9 @@ app.post('/postProjectData' , (req , res) => {
     projectData['temperature'] = temperature;
     projectData['date'] = date;
     projectData['zipCode'] = zipCode;
+
+
     res.send(projectData);
-})
+});
+
 
