@@ -46,11 +46,11 @@ app.get('/getProjectData' , (req , res) => {
 // Post Route
 
 app.post('/postProjectData' , (req , res) => {
-    const {temperature , date , zipCode } = req.body;
+
+    let {temperature , date , feeling } = req.body;
     projectData['temperature'] = temperature;
     projectData['date'] = date;
-    projectData['zipCode'] = zipCode;
-
+    projectData['feeling'] = feeling;
 
     res.send(projectData);
 });

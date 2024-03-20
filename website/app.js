@@ -1,5 +1,20 @@
 
 
+
+
+/* 
+
+
+
+i have a prblem need to be fixed .. when fetching content its undefined and cant solve it 
+
+*/ 
+
+
+
+
+
+
 // Personal API Key for OpenWeatherMap API
 const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?';
 const apiKey = '962f31478475387fbb71ba60fe52206c';
@@ -9,19 +24,21 @@ const apiKey = '962f31478475387fbb71ba60fe52206c';
 // Event listener to add function to existing HTML DOM element
 
 
-let getWeather = async (zipCode) => { 
+let getWeather = async (zipCode , feeling) => { 
     let url = baseUrl + "zip=" + zipCode + "&appid=" + apiKey;
     try { 
         const response = await fetch(url);
         const res = await response.json();
         let temp = res.main.temp;
-        let date = new Date().toISOString().split('T')[0];;
+        let date = new Date().toISOString().split('T')[0];
+
         let data = {
              temperature : temp ,
              date : date ,
-             zipCode : zipCode
+             feeling : feeling
             }
 
+                
         return data;
     }
     catch (error) { 
@@ -32,10 +49,15 @@ let getWeather = async (zipCode) => {
 
 
 document.getElementById('generate').addEventListener('click', getData = () => {
+
     let zipCode = document.getElementsByTagName('input')[0].value;
-    getWeather(zipCode).then((data) => {
-            postData('http://localhost:3000/postProjectData' , data).then((newData) => {
-                updateUI(newData);
+    let feeling = document.getElementById('feelings').value;
+
+    getWeather(zipCode , feeling).then((data) => {
+            
+            postData('http://localhost:3000/postProjectData' , data).then((data) => {
+                console.log(data); 
+                updateUI(data);
             })
     })
 });
@@ -54,12 +76,14 @@ let postData = async (url = '' , data = {}) => {
     });
     try { 
 
-        const newData = await response.json();
+        let data = await response.json();
         console.log('data posted successfully')
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return newData;
+        console.log("in post function " + data.feeling); 
+
+        return data;
     }
     catch(error) { 
         console.log(error);
@@ -68,13 +92,16 @@ let postData = async (url = '' , data = {}) => {
 
 
 
-let updateUI = (newData) => {
+let updateUI = (data) => {
     try { 
-        if(!newData) { 
+        if(!data) { 
             throw new Error('no data posted to fetch');
         }
-        document.getElementById('roundedDiv').innerText = 
-        `Temperature: ${newData.temperature}°C |   ${newData.date}  | zip code ${newData.zipCode}`;
+        document.getElementById('temp').innerText = `Temperature:  ${data.temperature / 33.8}°C`; 
+        document.getElementById('date').innerText = `date: ${data.date}`;
+        document.getElementById('content').innerText = `content : ${data.feeling}`;
+
+
     }
     catch(error) { 
             console.log(error);

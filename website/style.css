@@ -38,11 +38,12 @@ body {
 
 #roundedDiv {
     width: 400px;
-    height: 300px;
+    height: 250px;
     background-color: #ddd; /* Light gray background */
     border-radius: 20px; /* Rounded corners */
     margin-top: 20px; /* Space between the button and the div */
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
